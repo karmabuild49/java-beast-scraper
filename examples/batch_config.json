@@ -1,0 +1,23 @@
+{
+  "urls": [
+    "https://example.com/page1",
+    "https://example.com/page2",
+    "https://example.com/page3",
+    "https://example.com/page4",
+    "https://example.com/page5"
+  ],
+  "authType": "form",
+  "credentials": {
+    "loginUrl": "https://example.com/login",
+    "username": "user@example.com",
+    "password": "password123"
+  },
+  "selectors": {
+    "title": "h1.page-title",
+    "description": "p.description",
+    "content": "div.main-content",
+    "links": "a[href]"
+  },
+  "maxConcurrent": 5,
+  "timeoutSeconds": 30
+}

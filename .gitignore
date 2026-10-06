@@ -1,0 +1,35 @@
+# Maven
+target/
+*.jar
+*.class
+pom.xml.tag
+pom.xml.releaseBackup
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*~
+.DS_Store
+
+# Logs
+logs/
+*.log
+
+# Output
+output.json
+output_list.json
+*.json.bak
+
+# Cookies & Credentials
+cookies*.json
+*credentials*.json
+*_creds.json
+
+# Environment
+.env
+.env.local
+
+# Playwright
+.playwright/

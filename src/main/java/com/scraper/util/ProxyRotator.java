@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Rotates through proxy servers for load balancing and anti-detection
- */
 public class ProxyRotator {
     private static final Logger logger = LoggerFactory.getLogger(ProxyRotator.class);
     private final List<String> proxies;
@@ -26,13 +23,12 @@ public class ProxyRotator {
             for (String proxy : proxyList.split(",")) {
                 proxies.add(proxy.trim());
             }
-            logger.info("Loaded {} proxies from SCRAPER_PROXIES environment variable", proxies.size());
+            logger.info("Loaded {} proxies from environment", proxies.size());
         }
     }
 
     public String getNextProxy() {
         if (proxies.isEmpty()) {
-            logger.debug("No proxies configured, using direct connection");
             return null;
         }
         String proxy = proxies.get(currentIndex);
@@ -54,7 +50,7 @@ public class ProxyRotator {
 
     public void addProxies(List<String> proxyList) {
         proxies.addAll(proxyList);
-        logger.info("Added {} proxies (total: {})", proxyList.size(), proxies.size());
+        logger.info("Added {} proxies", proxyList.size());
     }
 
     public int getProxyCount() {
