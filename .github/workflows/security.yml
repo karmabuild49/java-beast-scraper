@@ -49,7 +49,7 @@ jobs:
       - name: Scan Maven dependencies
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
-        run: > 674C76A5-4E31-48A4-BAC6-C59E53395081
+        run: 
           mvn --batch-mode --no-transfer-progress
           org.owasp:dependency-check-maven:13.0.0:check
           -DfailBuildOnCVSS=7
