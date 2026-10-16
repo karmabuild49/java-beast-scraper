@@ -3,8 +3,8 @@ package com.scraper.session;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.microsoft.playwright.Cookie;
 import org.apache.hc.client5.http.cookie.BasicCookieStore;
+import org.apache.hc.client5.http.cookie.Cookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +25,7 @@ public class CookieManager {
     public void detectAndStoreCookies(BasicCookieStore cookieStore) {
         try {
             ArrayNode cookiesArray = (ArrayNode) cookieStorage.get("cookies");
-            cookieStore.getCookies().forEach(cookie -> {
+            for (Cookie cookie : cookieStore.getCookies()) {
                 ObjectNode cookieNode = mapper.createObjectNode();
                 cookieNode.put("name", cookie.getName());
                 cookieNode.put("value", cookie.getValue());
@@ -34,7 +34,7 @@ public class CookieManager {
                 cookieNode.put("secure", cookie.isSecure());
                 cookieNode.put("httpOnly", cookie.isHttpOnly());
                 cookiesArray.add(cookieNode);
-            });
+            }
             logger.info("🍪 Detected and stored {} cookies", cookieStore.getCookies().size());
         } catch (Exception e) {
             logger.warn("Error detecting cookies", e);
@@ -46,22 +46,22 @@ public class CookieManager {
         logger.info("🔐 JWT token stored");
     }
 
-    public void storeBrowserCookies(List<Cookie> cookies) {
+    public void storeCookies(List<Cookie> cookies) {
         try {
             ArrayNode cookiesArray = (ArrayNode) cookieStorage.get("cookies");
-            cookies.forEach(cookie -> {
+            for (Cookie cookie : cookies) {
                 ObjectNode cookieNode = mapper.createObjectNode();
-                cookieNode.put("name", cookie.name);
-                cookieNode.put("value", cookie.value);
-                cookieNode.put("domain", cookie.domain);
-                cookieNode.put("path", cookie.path);
-                cookieNode.put("secure", cookie.secure);
-                cookieNode.put("httpOnly", cookie.httpOnly);
+                cookieNode.put("name", cookie.getName());
+                cookieNode.put("value", cookie.getValue());
+                cookieNode.put("domain", cookie.getDomain());
+                cookieNode.put("path", cookie.getPath() != null ? cookie.getPath() : "/");
+                cookieNode.put("secure", cookie.isSecure());
+                cookieNode.put("httpOnly", cookie.isHttpOnly());
                 cookiesArray.add(cookieNode);
-            });
-            logger.info("🍪 Stored {} browser cookies", cookies.size());
+            }
+            logger.info("🍪 Stored {} cookies", cookies.size());
         } catch (Exception e) {
-            logger.warn("Error storing browser cookies", e);
+            logger.warn("Error storing cookies", e);
         }
     }
 
